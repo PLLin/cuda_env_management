@@ -11,6 +11,9 @@ RUN apt -y update \
         python3-pip \
         libzbar0 \
         libgl1 \
+        libsm6 \
+        libxext6 \
+        libxrender-dev \
         tzdata \
         locales
 
