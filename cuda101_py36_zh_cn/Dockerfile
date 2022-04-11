@@ -5,6 +5,7 @@ RUN apt -y update \
         build-essential \
         cmake \
         libprotobuf-dev \
+        libpq-dev \
         protobuf-compiler \
         python3-dev \
         python3-pip \
