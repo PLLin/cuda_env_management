@@ -17,6 +17,20 @@ RUN apt -y update \
         tzdata \
         locales
 
+WORKDIR /usr/local/cuda/lib64/
+RUN cp libcufft.so libcufft.so.10.0
+RUN cp libcurand.so libcurand.so.10.0
+RUN cp libcusolver.so libcusolver.10.0
+RUN cp libcusparse.so libcusparse.10.0
+RUN cp libcusolver.so libcusolver.so.10.0
+RUN cp libcusparse.so libcusparse.so.10.0
+RUN cp libcudart.so libcudart.so.10.0
+
+WORKDIR /usr/lib/x86_64-linux-gnu/
+RUN cp libcublas.so libcublas.so.10.0
+
+ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
+
 RUN TZ=Asia/Taipei \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
