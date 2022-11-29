@@ -26,10 +26,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 WORKDIR /build
 RUN wget https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz
 RUN tar -xzf Python-3.6.9.tgz
-RUN cd Python-3.6.9 && ./configure --prefix=/usr/local/python36 --with-openssl && make && make install
+RUN cd Python-3.6.9 && ./configure --prefix=/usr/local/ --with-openssl && make && make install
 RUN cd /build && rm -rf ./*
-RUN ln -s -f /usr/local/python36/bin/python3.6 /usr/bin/python3
-RUN ln -s -f /usr/local/python36/bin/pip3.6 /usr/bin/pip3
+RUN ln -s -f /usr/local/bin/python3.6 /usr/bin/python3
+RUN ln -s -f /usr/local/bin/pip3.6 /usr/bin/pip3
 
 RUN TZ=Asia/Taipei \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
