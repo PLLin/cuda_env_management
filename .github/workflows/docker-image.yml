@@ -11,9 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build the Docker image
+    - name: Build the no-model image
       id: buildx
       run: docker build --tag docker.io/pllin/cv-nomodel:${{  github.ref_name }} ./nomodel
+
+    - name: Build the gpu image
+      id: buildx_gpu
+      run: docker build --tag docker.io/pllin/cuda101_py36_zh_cn:${{  github.ref_name }} ./cuda101_py36_zh_cn
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
@@ -25,13 +29,26 @@ jobs:
        vuln-type: 'os,library'
        severity: 'CRITICAL,HIGH'
 
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+       image-ref: 'docker.io/pllin/cuda101_py36_zh_cn:${{  github.ref_name }}'
+       format: 'table'
+       exit-code: '1'
+       ignore-unfixed: true
+       vuln-type: 'os,library'
+       severity: 'CRITICAL,HIGH'
+
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: push docker image to dockerhub
+
+    - name: push gpu image to dockerhub
+      run: docker push docker.io/pllin/cuda101_py36_zh_cn:${{  github.ref_name }}
+
+    - name: push no-model image to dockerhub
       uses: docker/build-push-action@v3
       with:
         builder: ${{ steps.buildx.outputs.name }}
