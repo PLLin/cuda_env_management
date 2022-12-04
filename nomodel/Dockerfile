@@ -31,6 +31,7 @@ RUN cd Python-3.6.9 && ./configure --prefix=/usr/local/ --with-openssl && make &
 RUN cd /build && rm -rf ./*
 RUN ln -s -f /usr/local/bin/python3.6 /usr/bin/python3
 RUN ln -s -f /usr/local/bin/pip3.6 /usr/bin/pip3
+RUN pip3 install pip==21.2.1
 
 RUN TZ=Asia/Taipei \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
