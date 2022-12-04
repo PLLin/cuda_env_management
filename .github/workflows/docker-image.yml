@@ -35,5 +35,6 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         builder: ${{ steps.buildx.outputs.name }}
+        context: ./nomodel
         push: true
         tags: docker.io/pllin/cv-nomodel:${{  github.ref_name }}
