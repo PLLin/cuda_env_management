@@ -4,6 +4,8 @@ RUN apt -y update \
     &&  DEBIAN_FRONTEND=noninteractive apt install -y \
         build-essential \
         cmake \
+        libksba8=1.3.5-2ubuntu0.18.04.1 \
+        linux-libc-dev=4.15.0-200.211\
         libprotobuf-dev \
         libpq-dev \
         protobuf-compiler \
@@ -16,6 +18,8 @@ RUN apt -y update \
         libxrender-dev \
         tzdata \
         locales
+
+RUN pip3 install pip==21.2.1
 
 WORKDIR /usr/local/cuda/lib64/
 RUN cp libcufft.so libcufft.so.10.0
