@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Build the Docker image
+      id: buildx
       run: docker build --tag docker.io/pllin/cv-nomodel:${{  github.ref_name }} ./nomodel
 
     - name: Run Trivy vulnerability scanner
@@ -30,7 +31,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     
-    - name: Build and push
+    - name: push docker image to dockerhub
       uses: docker/build-push-action@v3
       with:
         builder: ${{ steps.buildx.outputs.name }}
