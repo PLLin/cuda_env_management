@@ -20,6 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
         libssl-dev \
         libreadline-dev \
         libffi-dev \
+        libbz2-dev \
         wget \
         zlib*
 
