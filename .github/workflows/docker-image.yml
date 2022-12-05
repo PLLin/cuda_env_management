@@ -13,11 +13,11 @@ jobs:
 
     - name: Build the no-model image
       id: buildx
-      run: docker build --tag docker.io/pllin/cv-nomodel:${{  github.ref_name }} ./nomodel
+      run: docker build -t docker.io/pllin/cv-nomodel:${{  github.ref_name }} -f nomodel/Dockerfile-1804 ./nomodel
 
     - name: Build the gpu image
       id: buildx_gpu
-      run: docker build --tag docker.io/pllin/cuda101_py36_zh_cn:${{  github.ref_name }} ./cuda101_py36_zh_cn
+      run: docker build -t docker.io/pllin/cuda101_py36_zh_cn:${{  github.ref_name }} ./cuda101_py36_zh_cn
 
     - name: Run Trivy vulnerability scanner of no model image
       uses: aquasecurity/trivy-action@master
@@ -53,5 +53,6 @@ jobs:
       with:
         builder: ${{ steps.buildx.outputs.name }}
         context: ./nomodel
+        file : nomodel/Dockerfile-1804
         push: true
         tags: docker.io/pllin/cv-nomodel:${{  github.ref_name }}
